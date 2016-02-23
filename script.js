@@ -1,5 +1,5 @@
 (function(scope){
-    var ConfigurableSwatches = function (selector) {
+    var SelectWrapper = function (selector) {
 
         //grab our config swatches wrapper
         var productWrapper = document.querySelector(selector),
@@ -22,7 +22,9 @@
                     li = ul.querySelectorAll('li');
                 Array.prototype.slice.call(options).forEach(function (option, index) {
                     li[index].textContent = option.textContent;
-                    li[index].setAttribute('data-index', index);
+                    if (index===0) {
+                        li[index].className = 'active';
+                    }
                 });
                 select.parentNode.appendChild(ul);
                 //hide selects
@@ -49,6 +51,15 @@
                     options[i].parentNode.dispatchEvent(new Event('change'));
                 }
             }
+            toggleClass(li);
+        };
+
+        var toggleClass = function(element) {
+            var activeElement = element.parentNode.querySelector('.active');
+            if (activeElement !== element) {
+                activeElement.className = '';
+                element.className = element.className == 'active' ? '' : 'active';
+            }
         };
 
         //our only public fn
@@ -58,5 +69,5 @@
         }
     };
 
-    scope.ConfigurableSwatches = typeof scope.ConfigurableSwatches === 'undefined' ? ConfigurableSwatches : scope.ConfigurableSwatches;
+    scope.SelectWrapper = typeof scope.SelectWrapper === 'undefined' ? SelectWrapper : scope.SelectWrapper;
 }(window));
