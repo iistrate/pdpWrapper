@@ -1,15 +1,15 @@
 (function(scope){
-    var SelectWrapper = function (selector, style, callback, grabAttributes, triggerOpt) {
+    var SelectWrapper = function (selector, style, callback, grabAttributes, triggerOpt, skipFirst) {
 
         //grab our config swatches wrapper
         var productWrapper = document.querySelector(selector),
             selects        = productWrapper.querySelectorAll('select'),
             selectedOption = [],
-            type           = 'regular' || style,
+            type           =  style || 'regular',
             callback       = callback || null,
             grabAttributes = grabAttributes || false,
-            triggerOpt     = triggerOpt || null;
-
+            triggerOpt     = triggerOpt || false,
+            skipFirstOpt   = skipFirst || false;
 
         //generate ul with a node count of count
         var generateList = function (count) {
@@ -25,7 +25,8 @@
         //grab the text from the options and hide them
         var populateLists = function () {
             Array.prototype.slice.call(selects).forEach(function (select) {
-                var options = select.querySelectorAll('option:not(:first-child)');
+                var options        = select.querySelectorAll('option' + (skipFirstOpt ? ':not(:first-child)' : '')),
+                    selectedIndex  = select.selectedIndex;
                 var ul = generateList(options.length),
                     li = ul.querySelectorAll('li');
                 Array.prototype.slice.call(options).forEach(function (option, index) {
@@ -36,8 +37,11 @@
                             li[index].setAttribute(attr.name, attr.value);
                         }
                     }
-                    if (index===0) {
-                        li[index].className = 'active';
+                    if (index===selectedIndex) {
+                        li[index].className = li[index].className+' active';
+                    }
+                    if (index === options.length-1 && style === 'dropdown') {
+                        li[selectedIndex].parentNode.insertBefore(li[selectedIndex], li[0]);
                     }
                 });
                 select.parentNode.appendChild(ul);
