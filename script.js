@@ -78,7 +78,8 @@
         var toggleClass = function(element) {
             var activeElement = element.parentNode.querySelector('.active');
             if (activeElement !== element) {
-                element.className = element.className == 'active' ? '' : 'active';
+                activeElement.classList.remove('active');
+                element.classList.toggle('active');
                 if (selectedOption.length > 1) {
                     selectedOption.shift().removeAttribute('selected');
                 }
