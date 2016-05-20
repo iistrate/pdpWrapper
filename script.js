@@ -86,21 +86,21 @@
             }
         };
 
-        //our only public fn
-        this.init = function () {
-            populateLists();
-            setUpEvents();
+        return {
+            init: function() {
+                populateLists();
+                setUpEvents();
 
-            //optionals
-            if (callback) {
-                callback();
-            }
-            if (triggerOpt) {
-                var opt = productWrapper.querySelectorAll('option')[triggerOpt];
+                //optionals
+                if (callback) {
+                    callback();
+                }
+                if (triggerOpt) {
+                    var opt = productWrapper.querySelectorAll('option')[triggerOpt];
                     opt.setAttribute('selected', 'selected');
+                }
             }
-
-        }
+        };
     };
 
     scope.SelectWrapper = typeof scope.SelectWrapper === 'undefined' ? SelectWrapper : scope.SelectWrapper;
