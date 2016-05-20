@@ -1,11 +1,10 @@
 (function(scope){
     var SelectWrapper = function (selector, style, callback, grabAttributes, triggerOpt, skipFirst) {
-
         //grab our config swatches wrapper
         var productWrapper = document.querySelector(selector),
             selects        = productWrapper.querySelectorAll('select'),
             selectedOption = [],
-            type           =  style || 'regular',
+            type           = style || 'regular',
             callback       = callback || null,
             grabAttributes = grabAttributes || false,
             triggerOpt     = triggerOpt || false,
@@ -55,9 +54,12 @@
         };
 
         var setUpEvents = function () {
-            Array.prototype.slice.call(productWrapper.querySelectorAll('li')).forEach(function (li) {
-                li.addEventListener('click', triggerSelect, false);
-            });
+            productWrapper.addEventListener('click', function(e) {
+                var target = e.target;
+                if (target.tagName === 'SPAN' || target.tagName === 'LI') {
+                    triggerSelect(e);
+                }
+            }, false);
         };
 
         var triggerSelect = function (e) {
@@ -76,7 +78,6 @@
         var toggleClass = function(element) {
             var activeElement = element.parentNode.querySelector('.active');
             if (activeElement !== element) {
-                activeElement.className = '';
                 element.className = element.className == 'active' ? '' : 'active';
                 if (selectedOption.length > 1) {
                     selectedOption.shift().removeAttribute('selected');
