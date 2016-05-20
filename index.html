@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+</head>
+<style>
+    html {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+    body {
+        max-width: 960px;
+    }
+    li {
+        padding: .5rem 0;
+        cursor: pointer;
+    }
+    .active {
+        color: lightblue;
+    }
+</style>
+<body>
+    <div class="wrapperDemo">
+        <h3>This list is build from a select, each item click triggers the select change</h3>
+        <select>
+            <option>Option 1</option>
+            <option>Option 2</option>
+            <option>Option 3</option>
+            <option>Option 4</option>
+            <option>Option 5</option>
+        </select>
+    </div>
+</body>
+<script src="script.js"></script>
+<script>
+    //selector, style, callback, grabAttributes, triggerOpt, skipFirst
+    new SelectWrapper('.wrapperDemo').init();
+</script>
+</html>
